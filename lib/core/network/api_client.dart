@@ -8,9 +8,9 @@ class ApiClient {
   const ApiClient(this.dio);
 
   Future<Response<dynamic>> get(
-      String path, {
-        Map<String, dynamic>? queryParameters,
-      }) async {
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       return await dio.get<dynamic>(
         path,

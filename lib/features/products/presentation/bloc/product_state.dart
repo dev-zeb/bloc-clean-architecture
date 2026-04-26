@@ -4,6 +4,13 @@ import '../../domain/entities/product.dart';
 
 enum ProductStatus { initial, loading, success, empty, failure, unauthorized }
 
+enum ProductNoticeType {
+  none,
+  connectionLost,
+  connectionRestored,
+  fetchFailed,
+}
+
 class ProductState extends Equatable {
   final ProductStatus status;
   final List<Product> products;
@@ -16,6 +23,9 @@ class ProductState extends Equatable {
   final bool isRefreshing;
   final bool isOnline;
   final bool isFromCache;
+  final int notificationId;
+  final ProductNoticeType notificationType;
+  final String notificationMessage;
 
   const ProductState({
     this.status = ProductStatus.initial,
@@ -29,6 +39,9 @@ class ProductState extends Equatable {
     this.isRefreshing = false,
     this.isOnline = true,
     this.isFromCache = false,
+    this.notificationId = 0,
+    this.notificationType = ProductNoticeType.none,
+    this.notificationMessage = '',
   });
 
   ProductState copyWith({
@@ -43,6 +56,9 @@ class ProductState extends Equatable {
     bool? isRefreshing,
     bool? isOnline,
     bool? isFromCache,
+    int? notificationId,
+    ProductNoticeType? notificationType,
+    String? notificationMessage,
   }) {
     return ProductState(
       status: status ?? this.status,
@@ -56,21 +72,29 @@ class ProductState extends Equatable {
       isRefreshing: isRefreshing ?? this.isRefreshing,
       isOnline: isOnline ?? this.isOnline,
       isFromCache: isFromCache ?? this.isFromCache,
+      notificationId: notificationId ?? this.notificationId,
+      notificationType: notificationType ?? this.notificationType,
+      notificationMessage: notificationMessage ?? this.notificationMessage,
     );
   }
 
+  bool get hasMoreProducts => totalItems == 0 || products.length < totalItems;
+
   @override
   List<Object?> get props => [
-    status,
-    products,
-    message,
-    currentPage,
-    totalPages,
-    totalItems,
-    hasReachedMax,
-    isLoadingMore,
-    isRefreshing,
-    isOnline,
-    isFromCache,
-  ];
+        status,
+        products,
+        message,
+        currentPage,
+        totalPages,
+        totalItems,
+        hasReachedMax,
+        isLoadingMore,
+        isRefreshing,
+        isOnline,
+        isFromCache,
+        notificationId,
+        notificationType,
+        notificationMessage,
+      ];
 }

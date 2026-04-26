@@ -6,5 +6,6 @@ abstract class ProductRepository {
     required int page,
     required int limit,
     bool forceRefresh = false,
+    bool clearCacheOnRefresh = true,
   });
 }

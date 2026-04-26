@@ -23,6 +23,10 @@ class ProductManualSyncRequested extends ProductEvent {
   const ProductManualSyncRequested();
 }
 
+class ProductAutoSyncRequested extends ProductEvent {
+  const ProductAutoSyncRequested();
+}
+
 class ProductConnectivityChanged extends ProductEvent {
   final bool isOnline;
 

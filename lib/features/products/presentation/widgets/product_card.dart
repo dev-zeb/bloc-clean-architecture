@@ -13,20 +13,7 @@ class ProductCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Row(
         children: [
-          Image.network(
-            product.thumbnail,
-            width: 96,
-            height: 96,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) {
-              return Container(
-                width: 96,
-                height: 96,
-                color: Colors.grey.shade200,
-                child: const Icon(Icons.image_not_supported),
-              );
-            },
-          ),
+          _ProductThumbnail(url: product.thumbnail),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(12),
@@ -63,6 +50,39 @@ class ProductCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ProductThumbnail extends StatelessWidget {
+  final String url;
+
+  const _ProductThumbnail({required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    if (url.isEmpty) return const _ProductImagePlaceholder();
+
+    return Image.network(
+      url,
+      width: 96,
+      height: 96,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => const _ProductImagePlaceholder(),
+    );
+  }
+}
+
+class _ProductImagePlaceholder extends StatelessWidget {
+  const _ProductImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 96,
+      height: 96,
+      color: Colors.grey.shade200,
+      child: const Icon(Icons.image_not_supported),
     );
   }
 }

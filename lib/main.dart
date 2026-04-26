@@ -15,21 +15,34 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ProductBloc? productBloc;
+
+  const MyApp({super.key, this.productBloc});
 
   @override
   Widget build(BuildContext context) {
+    final app = MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Products App',
+      theme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: const ProductsScreen(),
+    );
+
+    final bloc = productBloc;
+
+    if (bloc != null) {
+      return BlocProvider<ProductBloc>.value(
+        value: bloc,
+        child: app,
+      );
+    }
+
     return BlocProvider<ProductBloc>(
       create: (_) => sl<ProductBloc>(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Products App',
-        theme: ThemeData(
-          colorSchemeSeed: Colors.blue,
-          useMaterial3: true,
-        ),
-        home: const ProductsScreen(),
-      ),
+      child: app,
     );
   }
 }
