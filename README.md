@@ -93,10 +93,19 @@ flutter run
 ```
 
 ## 🧪 Running Tests
-
+Run unit and widget test:
 ```
 flutter test
-flutter test integration_test -d macos
+```
+
+Run integration tests on a connected device:
+```
+flutter test integration_test -d <device_id>
+```
+
+You can list available devices using:
+```
+flutter devices
 ```
 
 ## 📌 Notes
