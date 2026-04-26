@@ -11,11 +11,13 @@ class GetProducts {
     required int page,
     required int limit,
     bool forceRefresh = false,
+    bool clearCacheOnRefresh = true,
   }) {
     return repository.getProducts(
       page: page,
       limit: limit,
       forceRefresh: forceRefresh,
+      clearCacheOnRefresh: clearCacheOnRefresh,
     );
   }
 }

@@ -98,6 +98,13 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
           ),
       };
 
+      final staleKeys = productsBox.keys.where((key) {
+        final cachedProduct = productsBox.get(key);
+
+        return cachedProduct?['page'] == page;
+      }).toList();
+
+      await productsBox.deleteAll(staleKeys);
       await productsBox.putAll(entries);
 
       await metaBox.put(

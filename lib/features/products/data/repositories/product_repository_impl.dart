@@ -26,6 +26,7 @@ class ProductRepositoryImpl implements ProductRepository {
     required int page,
     required int limit,
     bool forceRefresh = false,
+    bool clearCacheOnRefresh = true,
   }) async {
     final skip = page * limit;
     final isOnline = await networkInfo.isConnected;
@@ -50,7 +51,7 @@ class ProductRepositoryImpl implements ProductRepository {
         skip: skip,
       );
 
-      if (page == 0 && forceRefresh) {
+      if (page == 0 && forceRefresh && clearCacheOnRefresh) {
         await localDataSource.clearProducts();
       }
 
